@@ -111,8 +111,8 @@ CDG	endif
 * IF low_w_flag is set.
 * NOTE: s, t, mtar, and Q2 must be converted to GeV first.
 
-c	ntup.sigcm1 = sig_blok(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1%e6,main.epsilon,
-c     >		targ%Mtar_struck/1000.,which_pion)
+	ntup.sigcm1 = sig_blok(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1%e6,main.epsilon,
+     >		targ%Mtar_struck/1000.,which_pion)
 
 CDG Change default to PARAM04 - this works better at larger Q2
 c	ntup%sigcm1 = sig_param04(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1.e6,main%epsilon,
@@ -123,8 +123,8 @@ c	ntup%sigcm1 = sig_param_3000(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1.e6,m
 c     >		targ%Mtar_struck/1000.,which_pion)
 
 CDG Use Peter Bosted's new fit to world, JLab 6 GeV, and preliminary 12 GeV data 
-	ntup%sigcm1 = sig_param_2021(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1.e6,main%epsilon,
-     >           which_pion,doing_pizero)
+c	ntup%sigcm1 = sig_param_2021(thetacm,phicm,main%t/1.e6,vertex%q2/1.e6,s/1.e6,main%epsilon,
+c     >           which_pion,doing_pizero)
 
 	sigma_eepi = ntup%sigcm1
 

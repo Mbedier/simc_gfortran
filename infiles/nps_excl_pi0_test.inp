@@ -6,7 +6,7 @@ begin parm experiment
   doing_phsp = 0		;  (ONE = TRUE)
   doing_kaon = 0		;  (ONE = TRUE)
   doing_pion = 1		;  (ONE = TRUE)
-  which_pion = 0		;  (0=p->pi+,1=n->pi-,10/11 for pi+/pi- coherent)
+  which_pion = 10		;  (0=p->pi+,1=n->pi-,10/11 for pi+/pi- coherent)
   doing_decay = 0		;  1=decay ON, 0=decay OFF.
   ctau = 780.4			;  decay length (cm)
   doing_semi = 0
@@ -19,7 +19,7 @@ begin parm kinematics_main
   Ebeam = 10540.0			;  (MeV)
   dEbeam = 0.05			;  beam energy variation (%)
   electron_arm = 1              ;  1=hms,2=sos,3=hrsr,4=hrsl,5=shms
-  hadron_arm = 8                ;  1=hms,2=sos,3=hrsr,4=hrsl,5=shms,7=calo:BR,8=calo:BL
+  hadron_arm = 5                ;  1=hms,2=sos,3=hrsr,4=hrsl,5=shms,7=calo:BR,8=calo:BL
   spec%e%P = 2416.0		;  e arm central momentum (MeV/c)
   spec%e%theta = 26.80		;  e arm angle setting (degrees)
   spec%p%P = 8124.00		;  p arm central momentum (MeV/c)

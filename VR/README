@@ -1,0 +1,8 @@
+http://rprmodel.ugent.be/calc/
+all calcs use VR model: PRC 89,025203(2014); PRC 89,065202(2014)
+
+\sqrt{2*\epsilon*(1\pm\epsilon)}d\sigma_{LT}(′) normalization
+
+Columns are:
+  Q²                W               -t          dσ_L/dt          dσ_T/dt         dσ_LT/dt         dσ_TT/dt
+(GeV²)            (GeV)           (GeV²)        (μb/GeV²)        (μb/GeV²)       (μb/GeV²)        (μb/GeV²)
