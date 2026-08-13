@@ -987,15 +987,17 @@ c	   if ((vertex%Emiss**2-vertex%Pmiss**2).lt.(Mp+Mpi0)**2) then
 	   endif
 	endif
 
+
+	vertex%zhad = vertex%p%E/vertex%nu
+	vertex%pt2 = vertex%p%P**2*(1.0-cos(main%theta_pq)**2)
 	if(doing_semi) then
-	   vertex%zhad = vertex%p%E/vertex%nu
-	   vertex%pt2 = vertex%p%P**2*(1.0-cos(main%theta_pq)**2)
 	   if(vertex%zhad.gt.1.0) then
+	      write(6,*) 'WARNING! z=E/nu>1.0. This should never happen. Setting success to .false.'
 	      success=.false.
 	      return
 	   endif
 	endif
-
+	
 
 ! Determine PHYSICS scattering angles theta/phi for the two spectrometer
 ! vectors, and the Jacobian which we must include in our xsec computation
@@ -1333,10 +1335,11 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 	  ntup%t = t
 	endif
 
-	if(doing_semi.or.doing_rho) then
+cDJG  Always calculate z and pt. 
+cDJG	if(doing_semi.or.doing_rho) then
 	   recon%zhad = recon%p%E/recon%nu
 	   recon%pt2 = recon%p%P**2*(1.0-cos(recon%theta_pq)**2)
-	endif
+cDJG	endif
 
 ! Calculate Trec, Em. Trec for (A-1) system (eep), or for struck nucleon (pi/K)
 ! Note that there are other ways to calculate 'Em' for the pion/kaon case.
@@ -1466,14 +1469,14 @@ C empirical check's.
 		if (doing_pizero) then
 		   main%sigcc = 0.55*main%sigcc ! g* p -> pi0 Delta+
 		else
-		   main%sigcc = 0.4*main%sigcc !(pi+ Delta0)/(pi+ n) updated 17july2023
+		   main%sigcc = targ%Z*0.4*main%sigcc !(pi+ Delta0)/(pi+ n) updated 17july2023
 		endif
 	     elseif(doing_deutpi) then
 		if (doing_pizero) then
 		   main%sigcc = 0.55*main%sigcc ! g* p -> pi0 Delta+
 		else
-		   main%sigcc = 0.4*main%sigcc !(pi+ Delta0)/pi+ n)   updated 17july2023
-     >                      + 0.8*main%sigcc !(pi+ Delta-)/(pi+ n)
+		   main%sigcc = targ%Z*0.4*main%sigcc !(pi+ Delta0)/pi+ n)   updated 17july2023
+     >                      + targ%N*0.8*main%sigcc !(pi+ Delta-)/(pi+ n)
 		endif
 	     endif 
 	  elseif (which_pion.eq.3) then  !g* p->pi- Delta++, g* n-> pi- Delta+, or g* n -> pi0 Delta0
@@ -1481,21 +1484,21 @@ C empirical check's.
 		if(doing_pizero) then
 		   main%sigcc = 0 ! can't do gamma* n -> pi0 Delta0 for hydpi
 		else
-		   main%sigcc = 0.55*main%sigcc ! (pi- Delta++)/(pi- p)  updated 17july2023
+		   main%sigcc = targ%Z*0.55*main%sigcc ! (pi- Delta++)/(pi- p)  updated 17july2023
 		endif
 	     elseif(doing_deutpi) then
 		if(doing_pizero) then
 		   main%sigcc = 0.99*main%sigcc !g* n -> pi0 Delta0
 		else
-		   main%sigcc = 0.55*main%sigcc ! (pi- Delta++)/(pi- p)  updated 17july2023
-     >                     + 0.99*main%sigcc !(pi- Delta+)/(pi- p)
+		   main%sigcc = targ%Z*0.55*main%sigcc ! (pi- Delta++)/(pi- p)  updated 17july2023
+     >                     + targ%N*0.99*main%sigcc !(pi- Delta+)/(pi- p)
 		endif
 	     endif
 	  endif
 	  main%sigcc_recon = 1.0
 	  if (which_pion.eq.1 .or. which_pion.eq.11) then  !OK for coherent???
 	    tgtweight = targ%N
-	  else
+	  else if (which_pion.eq.0 .or. which_pion.eq.10) then
 	    tgtweight = targ%Z
 	  endif
 
