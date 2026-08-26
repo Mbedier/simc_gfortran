@@ -605,7 +605,7 @@ c	   endif
 	    tmpfile='benharsf_12.dat'
 	  else if (nint(targ%A).eq.56) then  
 	    tmpfile='benharsf_56.dat'
-	  else if (nint(targ%A).eq.64) then
+	  else if (nint(targ%A).eq.63) then
             tmpfile='benharsf_64.dat'
 	  else if (nint(targ%A).eq.197) then
 	    tmpfile='benharsf_197.dat'
