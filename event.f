@@ -1066,7 +1066,7 @@ C DJG stinkin' Jacobian!
 	real*8 targx,targy,targz
 	real*8 W2
 	real*8 oop_x,oop_y
-	real*8 mm,mm,mm2,mmA2,t
+	real*8 mm,mmA,mm2,mmA2,t
 
 	logical success
 	type(event)::	recon
