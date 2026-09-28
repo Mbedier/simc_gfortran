@@ -28,6 +28,7 @@
 	real*8		domega_e, domega_p !populated e/hadron solid angles.
 	logical		success
 	logical		pass_cuts
+	logical         exst
 	character	filename*80, genfile*80, histfile*80, timestring1*30
 	character	timestring2*30,genifile*80
 	type(event)::		vertex, vertex0, orig, recon
@@ -69,6 +70,12 @@ c	call hlimit(PawSize)
 
 	i = index(base,' ')
 	if (Nntu.gt.0) then
+	  inquire(file='worksim/.',exist=exst)
+	  if(.not.exst) then
+	     write(6,*) 'worksim directory does not exist - please create'
+	     write(6,*) 'Ideally, this should be a link to a large disk (work,scratch, etc.)'
+	     stop
+	  endif
 	  filename = 'worksim/'//base(1:i-1)//'.bin'
 	  call NtupleInit(filename)
 	endif
@@ -672,6 +679,8 @@ c	include 'histograms.inc'
 	    write(iun,*) '              ****--------  D(e,e''p)  --------****'
 	  else if (doing_heavy) then
 	    write(iun,*) '              ****--------  A(e,e''p)  --------****'
+	  else if (doing_nuc_elast) then
+	    write(iun,*) '              ****--------  A(e,e'')A  --------****'
 	  else
 	    stop 'I don''t have ANY idea what (e,e''p) we''re doing!!!'
 	  endif
@@ -882,6 +891,7 @@ c	include 'histograms.inc'
      >		'doing_phsp', doing_phsp
 	write(iun,'(5x,3(2x,a19,''='',i2))') 'which_pion', which_pion,
      >		'which_kaon', which_kaon, 'pizero_ngamma',pizero_ngamma
+	write(iun,'(5x,1(2x,a19,''='',l2))') 'doing_nuc_elast', doing_nuc_elast
 	write(iun,'(5x,3(2x,a19,''='',l2))') 'doing_hyd_elast', doing_hyd_elast,
      >		'doing_deuterium', doing_deuterium, 'doing_heavy', doing_heavy
 	write(iun,'(5x,3(2x,a19,''='',l2))') 'doing_hydpi', doing_hydpi,
